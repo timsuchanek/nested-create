@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.db"
+}
+
+model Link {
+  id      Int      @default(autoincrement()) @id
+  url     String
+  article Article?
+}
+
+model Article {
+  id     Int     @default(autoincrement()) @id
+  linkId Int?    @map("link")
+  link   Link?   @relation(fields: [linkId], references: [id])
+  title  String?
+  text   String?
+}
